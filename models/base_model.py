@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 from uuid import uuid4
 from datetime import datetime
+import models
 
 """contains the parent class BaseModel"""
 
@@ -19,12 +20,13 @@ class BaseModel:
                 if key == "created_at" or key == "updated_at":
                     self.__dict__[key] = datetime\
                         .strptime(value, "%Y-%m-%dT%H:%M:%S.%f")
-                else:
+                elif key != "__class__":
                     setattr(self, key, value)
 
         else:
             self.id = str(uuid4())
             self.created_at = self.updated_at = datetime.now()
+            models.storage.new(self)
 
     def __str__(self):
         """prints: [<class name>] (<self.id>) <self.__dict__>"""
@@ -39,6 +41,7 @@ class BaseModel:
         """
 
         self.updated_at = datetime.now()
+        models.storage.save()
 
     def to_dict(self):
         """
