@@ -8,6 +8,8 @@ class TestUser(unittest.TestCase):
     """class TestUser"""
 
     def test_checking_for_attributes(self):
+        """checking for attributes"""
+
         self.assertTrue('email' in self.my_user.__dict__)
         self.assertTrue('id' in self.my_user.__dict__)
         self.assertTrue('created_at' in self.my_user.__dict__)
