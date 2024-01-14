@@ -1,10 +1,10 @@
 #!/usr/bin/python3
+"""The console module"""
+
 import cmd
 from models import storage
 import shlex
 from models.base_model import BaseModel
-
-"""The console module"""
 
 
 class HBNBCommand(cmd.Cmd):

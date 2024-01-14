@@ -1,8 +1,8 @@
 #!/usr/bin/python3
+"""contains the class FileStorge"""
+
 import json
 from models.base_model import BaseModel
-
-"""contains the class FileStorge"""
 
 
 class FileStorage:
@@ -46,5 +46,27 @@ class FileStorage:
                 loaded_obj = json.load(file)
             for key, value in loaded_obj.items():
                 self.__objects[key] = BaseModel(**value)
+        except FileNotFoundError:
+            pass
+
+    def serialize(self):
+        """Serialize __objects to a JSON file"""
+
+        serialized = {}
+        for key, value in self.__objects.items():
+            serialized[key] = value.to_dict()
+        with open(self.__file_path, 'w', encoding='utf-8') as file:
+            json.dump(serialized, file)
+
+    def deserialize(self):
+        """Deserialize the JSON file to __objects"""
+
+        try:
+            with open(self.__file_path, 'r', encoding='utf-8') as file:
+                data = json.load(file)
+                for key, value in data.items():
+                    class_name = value['__class__']
+                    obj = eval(class_name)(**value)
+                    self.__objects[key] = obj
         except FileNotFoundError:
             pass

@@ -1,9 +1,9 @@
 #!/usr/bin/python3
+"""contains the parent class BaseModel"""
+
 from uuid import uuid4
 from datetime import datetime
 import models
-
-"""contains the parent class BaseModel"""
 
 
 class BaseModel:
